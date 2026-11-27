@@ -1,43 +1,54 @@
 # ai-toolkit-minions
 
-Repositório exclusivo de contexto de IA do Atende. Regras, skills e o gancho de modelo ficam aqui. A aplicação continua em [atende-ai-assistente](https://github.com/alissoncruz/atende-ai-assistente).
+Contexto de IA do Cursor para os projetos Atende. Este repositório não é a aplicação. A aplicação está em [atende-ai-assistente](https://github.com/alissoncruz/atende-ai-assistente).
 
-Abra esta pasta no Cursor. As regras em `.cursor/rules` passam a valer neste repositório.
+Quem abre esta pasta no Cursor recebe as regras de arquitetura, o limite de modelo caro e as skills de módulo e caso de uso.
 
-Para publicar a mesma cópia num produto:
+## Usar no Cursor
+
+1. Clone o repositório e abra a pasta no Cursor: **File → Open Folder**.
+2. Aceite o workspace como confiável. Sem isso, o gancho que barra modelo caro em tarefa simples não roda.
+3. Abra um chat novo do Agent. Um chat antigo não carrega regras que acabaram de entrar.
+4. Confira em **Cursor Settings → Rules** as regras do projeto:
+   - `architecture` e `token-economy`, sempre ligadas
+   - `java-hexagonal`, quando houver arquivo `.java`
+   - `maven`, quando houver `pom.xml`
+5. No dia a dia, escolha **Composer** ou **Grok** no seletor do chat. Tarefa simples (typo, um arquivo, formatação, texto curto) fica nesse chat, sem subagente.
+6. Para criar um módulo ou um caso de uso no produto, peça em linguagem normal. As skills `add-module` e `add-use-case` entram sozinhas. Também dá para chamá-las com `/`.
+
+O mapa do que ler em cada tarefa está em [`knowledge/INDEX.md`](knowledge/INDEX.md). O agente deve abrir um arquivo por vez.
+
+## Usar junto com o produto
+
+As regras daqui valem ao abrir este repositório. Para o agente seguir as mesmas regras dentro de `atende-ai-assistente`, publique a cópia na raiz do produto:
 
 ```bash
-scripts/sync-into-project.sh /caminho/do/produto
+scripts/sync-into-project.sh /caminho/do/atende-ai-assistente
 ```
 
-## O que entra no prompt
+O script copia `.cursor/` (regras, skills e gancho). Não copie essa pasta de volta para cá: a fonte é este repositório. Para conferir se a cópia do produto ainda está igual:
 
-Sempre, e por isso fica curto:
+```bash
+scripts/check-sync.sh /caminho/do/atende-ai-assistente
+```
 
-- `.cursor/rules/architecture.mdc`
-- `.cursor/rules/token-economy.mdc`
+No produto, cole [`templates/AGENTS.project.md`](templates/AGENTS.project.md) como `AGENTS.md` da raiz se quiser o resumo sempre visível no chat.
 
-Só ao editar o arquivo correspondente:
+## O que cada arquivo faz
 
-- `java-hexagonal.mdc` em `**/*.java`
-- `maven.mdc` em `**/pom.xml`
+| Caminho | Para que serve |
+| --- | --- |
+| `.cursor/rules/architecture.mdc` | Fronteira do monólito modular. Entra em todo chat. |
+| `.cursor/rules/token-economy.mdc` | Tarefa simples não usa modelo caro nem subagente. Entra em todo chat. |
+| `.cursor/rules/java-hexagonal.mdc` | Pacotes e domínio sem framework. Entra ao editar Java. |
+| `.cursor/rules/maven.mdc` | Parent e `relativePath` do Maven. Entra ao editar `pom.xml`. |
+| `.cursor/skills/add-module` | Cria um módulo hexagonal novo. |
+| `.cursor/skills/add-use-case` | Cria porta, caso de uso e teste de domínio. |
+| `.cursor/hooks/model-cost-guard.py` | Troca ou recusa subagente em modelo caro quando a tarefa é simples. |
+| `knowledge/INDEX.md` | Onde buscar cada documento do produto. |
 
-Skills `add-module` e `add-use-case` carregam quando a tarefa é criar módulo ou caso de uso no produto. O mapa de leitura está em `knowledge/INDEX.md`. Abra um arquivo por tarefa.
+Modelo caro, para o gancho: slug com `opus`, `fable` ou `gpt-5`; slug com `xhigh`, `max` ou `fast`; Sonnet em `high`. Uma tarefa difícil só usa esses modelos se o texto dela tiver, numa linha sozinha, `complexidade: alta` (fronteira entre módulos ou bug sem causa óbvia) ou `modelo-pedido` (a pessoa pediu o modelo pelo nome).
 
-## Modelos em tarefa simples
+## Alterar o contexto
 
-Tarefa simples não usa modelo caro e não abre subagente para isso.
-
-O seletor do chat continua com quem está na conversa. O hook em `.cursor/hooks/model-cost-guard.py` cobre subagente:
-
-- `preToolUse` no `Task` troca modelo caro por `composer-2.5` quando a tarefa não está marcada como complexa.
-- `subagentStart` recusa o subagente se o modelo resolvido ainda for caro.
-
-Marca, numa linha só do texto da tarefa, apenas nestes casos:
-
-- `complexidade: alta` para fronteira entre módulos ou bug sem causa óbvia.
-- `modelo-pedido` quando a pessoa pediu um modelo pelo nome.
-
-Caro, para este gancho: slug com `opus`, `fable` ou `gpt-5`; slug com `xhigh`, `max` ou `fast`; Sonnet em `high`, `xhigh` ou `max`.
-
-Para o dia a dia, escolha Composer ou Grok no seletor. Um chat já aberto em Opus continua nesse modelo; o gancho impede um segundo modelo caro numa tarefa simples.
+Edite os arquivos aqui e abra um chat novo para ver o efeito. Se o produto já recebeu uma cópia, rode de novo `scripts/sync-into-project.sh`.
