@@ -9,4 +9,6 @@ Feature, caso de uso ou módulo novo: use a skill `plan-feature`, grave o plano 
 
 Código dessa feature só começa se o plano em `plans/` tiver a linha `Status: aceito`. Quem muda essa linha é a pessoa. O agente não aceita o plano.
 
-Tarefa simples não tem plano: typo, rename, um arquivo, formatação, POM ou texto curto. Faça direto.
+Ao entregar, acrescente uma linha no fim de `features.log` do repositório que mudou. A linha é `AAAA-MM-DD` mais a frase da seção Log do plano. Não reescreva linhas antigas. Uma feature, uma linha. Plano `proposto` não gera linha.
+
+Tarefa simples não tem plano nem linha no log: typo, rename, um arquivo, formatação, POM ou texto curto. Faça direto.
