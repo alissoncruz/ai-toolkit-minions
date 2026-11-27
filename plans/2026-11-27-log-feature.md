@@ -2,7 +2,7 @@
 
 Data: 2026-11-27
 Repositório: toolkit
-Status: proposto
+Status: aceito
 
 ## Objetivo
 
@@ -31,3 +31,7 @@ Um plano com `Status: proposto` deixa `features.log` intocado. Com `Status: acei
 ## Riscos
 
 Dois chats da mesma feature podem gravar a linha duas vezes. A regra vale uma vez, no trabalho que entrega. O sync não copia `features.log`; o log do produto só aparece quando uma feature do produto for entregue.
+
+## Log
+
+log-feature — Cada feature entregue grava uma linha neste log.

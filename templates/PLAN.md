@@ -27,3 +27,7 @@ O comando ou o fluxo que mostra que funcionou.
 ## Riscos
 
 O que pode quebrar.
+
+## Log
+
+slug — uma frase do que a feature faz.
