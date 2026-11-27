@@ -1,0 +1,10 @@
+---
+description: Feature nova começa por um plano, sem código
+alwaysApply: true
+---
+
+# Plano antes da feature
+
+Feature, caso de uso ou módulo novo: use a skill `plan-feature`, grave o plano e pare. Não escreva código nessa conversa.
+
+Tarefa simples não tem plano: typo, rename, um arquivo, formatação, POM ou texto curto. Faça direto.

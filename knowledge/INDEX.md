@@ -16,6 +16,7 @@ Documentos do produto estão em [atende-ai-assistente](https://github.com/alisso
 | Testes | `docs/architecture/TESTING.md` |
 | Log e métricas | `docs/architecture/OBSERVABILITY.md` |
 | Fases do MVP | `docs/modules/MVP.md` |
+| Planejar feature | skill `plan-feature` |
 | Criar módulo | skill `add-module` |
 | Criar caso de uso | skill `add-use-case` |
 | Modelo e tokens | `.cursor/rules/token-economy.mdc` |

@@ -5,7 +5,7 @@ alwaysApply: true
 
 # Economia de tokens
 
-Tarefa simples: typo, rename, um arquivo, formatação, POM, texto curto, value object ou teste de domínio isolado.
+Tarefa simples: typo, rename, um arquivo, formatação, POM, texto curto, value object ou teste de domínio isolado. Feature nova segue `plan-before-feature`.
 
 - Faça no próprio turno. Não abra subagente.
 - Não passe modelo no Task. Se um subagente for inevitável, use `composer-2.5`.

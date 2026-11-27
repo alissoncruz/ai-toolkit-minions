@@ -14,7 +14,8 @@ Quem abre esta pasta no Cursor recebe as regras de arquitetura, o limite de mode
    - `java-hexagonal`, quando houver arquivo `.java`
    - `maven`, quando houver `pom.xml`
 5. No dia a dia, escolha **Composer** ou **Grok** no seletor do chat. Tarefa simples (typo, um arquivo, formatação, texto curto) fica nesse chat, sem subagente.
-6. Para criar um módulo ou um caso de uso no produto, peça em linguagem normal. As skills `add-module` e `add-use-case` entram sozinhas. Também dá para chamá-las com `/`.
+6. Antes de uma feature, caso de uso ou módulo novo, o agente usa a skill `plan-feature`, grava o plano em `plans/` e para. O código fica para o chat seguinte, depois que o plano for aceito. Typo, rename e ajuste de um arquivo não passam por plano.
+7. Para criar um módulo ou um caso de uso no produto, peça em linguagem normal. As skills `add-module` e `add-use-case` entram sozinhas. Também dá para chamá-las com `/`.
 
 O mapa do que ler em cada tarefa está em [`knowledge/INDEX.md`](knowledge/INDEX.md). O agente deve abrir um arquivo por vez.
 
@@ -40,6 +41,8 @@ No produto, cole [`templates/AGENTS.project.md`](templates/AGENTS.project.md) co
 | --- | --- |
 | `.cursor/rules/architecture.mdc` | Fronteira do monólito modular. Entra em todo chat. |
 | `.cursor/rules/token-economy.mdc` | Tarefa simples não usa modelo caro nem subagente. Entra em todo chat. |
+| `.cursor/rules/plan-before-feature.mdc` | Feature nova começa pelo plano. Entra em todo chat. |
+| `.cursor/skills/plan-feature` | Escreve o plano em `plans/` e não implementa. |
 | `.cursor/rules/java-hexagonal.mdc` | Pacotes e domínio sem framework. Entra ao editar Java. |
 | `.cursor/rules/maven.mdc` | Parent e `relativePath` do Maven. Entra ao editar `pom.xml`. |
 | `.cursor/skills/add-module` | Cria um módulo hexagonal novo. |
